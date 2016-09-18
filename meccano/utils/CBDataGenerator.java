@@ -40,6 +40,8 @@ public class CBDataGenerator {
                     .put("item_id", item_id)
                     .put("store_id", store_id)
                     .put("quantity", rd.nextInt(100)+1)
+                    .put("price", rd.nextInt(49)+1)
+                    .put("currency", "E")
                     .put("category", getRandomCategories());
             JsonDocument doc = JsonDocument.create(store_id+"-"+item_id, item);
             JsonDocument inserted = bucket.upsert(doc);
@@ -87,6 +89,7 @@ public class CBDataGenerator {
     {
         return Integer.toString(rd.nextInt(variety)+1);
     }
+
     public void createOrders(int num) {
         for (int i = 0; i < num; i++) {
             int order_id = Math.abs(rd.nextInt());
@@ -135,7 +138,7 @@ public class CBDataGenerator {
         }
 
         // Create a cluster reference
-        cluster = CouchbaseCluster.create(this.db.cluster);
+        cluster = this.db.cluster;
         // Connect to the bucket and open it
         if (db.password != null)
             bucket = cluster.openBucket(this.db.bucket, this.db.password);
@@ -177,7 +180,7 @@ public class CBDataGenerator {
 
         switch (x) {
             case 0:
-                return "Gijón";
+                return "Gijon";
             case 1:
                 return "Madrid";
             case 2:

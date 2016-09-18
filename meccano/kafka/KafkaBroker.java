@@ -1,5 +1,8 @@
 package com.meccano.kafka;
 
+import com.meccano.microservices.MicroService;
+import org.apache.log4j.Logger;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -13,6 +16,8 @@ import java.util.List;
 public class KafkaBroker {
 
     protected ArrayList<KafkaTopic> topics;
+    static Logger log = Logger.getLogger(KafkaBroker.class.getName());
+
 
     public KafkaBroker(){
         topics = new ArrayList<KafkaTopic>();
@@ -60,11 +65,15 @@ public class KafkaBroker {
     }
     public KafkaMessage getMessage(String name){
         KafkaTopic topic = this.getTopic(name);
-        if (topic != null)
-            return topic.get();
-        else
-        {
-            System.err.println("[ERROR] KakfaBroker - "+ name+" KakfaTopic is null");
+        if (topic != null){
+            if (topic.size()>0)
+                return topic.get();
+            else
+                return null;
+        }
+
+        else {
+            log.error("[ERROR] KakfaBroker - "+ name+" KakfaTopic is null");
             return null;
         }
     }

@@ -9,8 +9,10 @@ public class KafkaMessage {
     protected MessageBody body;
     protected String source;
     protected String destination;
+    protected String topic;
 
-    public KafkaMessage(String type, MessageBody body, String source, String destination) {
+    public KafkaMessage(String topic, String type, MessageBody body, String source, String destination) {
+        this.topic=topic;
         this.type = type;
         this.source=source;
         this.destination=destination;
